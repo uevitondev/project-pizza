@@ -3,6 +3,8 @@ package com.uevitondev.mspizza.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_user")
@@ -14,6 +16,9 @@ public class User implements Serializable {
     private String lastName;
     private String email;
     private String password;
+    @ManyToMany
+    @JoinTable(name = "tb_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private final List<Role> roles = new ArrayList<>();
 
     public User() {
     }
@@ -64,5 +69,9 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
     }
 }

@@ -3,6 +3,8 @@ package com.uevitondev.mspizza.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_role")
@@ -11,6 +13,8 @@ public class Role implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @ManyToMany(mappedBy = "roles")
+    private final List<User> users = new ArrayList<>();
 
     public Role() {
     }
@@ -34,5 +38,9 @@ public class Role implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<User> getUsers() {
+        return users;
     }
 }
