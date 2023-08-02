@@ -1,6 +1,6 @@
 package com.uevitondev.mspizza.contollers;
 
-import com.uevitondev.mspizza.entities.User;
+import com.uevitondev.mspizza.dto.UserDTO;
 import com.uevitondev.mspizza.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,8 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+
         return ResponseEntity
                 .ok()
                 .body(userService.getAllUsers());
