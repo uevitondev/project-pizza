@@ -1,4 +1,4 @@
-package com.uevitondev.mspizza.dto;
+package com.uevitondev.mspizza.dtos;
 
 import com.uevitondev.mspizza.entities.Role;
 

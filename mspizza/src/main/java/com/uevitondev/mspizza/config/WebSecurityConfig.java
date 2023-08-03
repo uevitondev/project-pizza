@@ -21,14 +21,17 @@ public class WebSecurityConfig {
     private JwtAuthenticationFilter authenticationFilter;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .csrf(csrf -> csrf.disable())
+        return http.csrf(csrf -> csrf.disable())
+                .headers(headers -> headers.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
+                .authorizeHttpRequests(auth -> auth.requestMatchers(new AntPathRequestMatcher("/h2-console/**"))
+                        .permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/auth"))
                         .permitAll()
+                        //.requestMatchers(new AntPathRequestMatcher("/users"))
+                        //.hasAuthority("ADMIN")
                         .anyRequest()
-                        .authenticated())
+                        .permitAll())
                 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

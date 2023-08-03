@@ -90,6 +90,11 @@ public class User implements Serializable, UserDetails {
     }
 
     @Override
+    public String toString() {
+        return "User{" + "id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + '\'' + ", password='" + password + '\'' + ", roles=" + roles + '}';
+    }
+
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).toList();
     }

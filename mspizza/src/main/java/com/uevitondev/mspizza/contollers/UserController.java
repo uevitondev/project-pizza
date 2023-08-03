@@ -1,10 +1,11 @@
 package com.uevitondev.mspizza.contollers;
 
-import com.uevitondev.mspizza.dto.UserDTO;
+import com.uevitondev.mspizza.dtos.UserDTO;
 import com.uevitondev.mspizza.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,4 +24,10 @@ public class UserController {
                 .ok()
                 .body(userService.getAllUsers());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(userService.getUserById(id));
+    }
+
 }

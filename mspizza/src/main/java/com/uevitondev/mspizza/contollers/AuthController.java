@@ -1,6 +1,7 @@
 package com.uevitondev.mspizza.contollers;
 
-import com.uevitondev.mspizza.dto.UserLoginDTO;
+import com.uevitondev.mspizza.dtos.ResponseLoginDTO;
+import com.uevitondev.mspizza.dtos.UserLoginDTO;
 import com.uevitondev.mspizza.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping
-    public ResponseEntity<String> login(@RequestBody UserLoginDTO userLoginDTO) {
+    public ResponseEntity<ResponseLoginDTO> login(@RequestBody UserLoginDTO userLoginDTO) {
         return ResponseEntity.ok().body(authService.login(userLoginDTO));
     }
 }

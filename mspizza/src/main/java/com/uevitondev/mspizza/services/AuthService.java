@@ -1,6 +1,7 @@
 package com.uevitondev.mspizza.services;
 
-import com.uevitondev.mspizza.dto.UserLoginDTO;
+import com.uevitondev.mspizza.dtos.ResponseLoginDTO;
+import com.uevitondev.mspizza.dtos.UserLoginDTO;
 import com.uevitondev.mspizza.entities.User;
 import com.uevitondev.mspizza.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,13 @@ public class AuthService implements UserDetailsService {
     @Autowired
     private JwtService jwtService;
 
-    public String login(UserLoginDTO userLoginDTO) {
+    public ResponseLoginDTO login(UserLoginDTO userLoginDTO) {
         var user = new UsernamePasswordAuthenticationToken(userLoginDTO.getEmail(), userLoginDTO.getPassword());
         var auth = authenticationManager.authenticate(user);
         var userAuth = (User) auth.getPrincipal();
-        return jwtService.generateToken(userAuth);
+        var token = jwtService.generateToken(userAuth);
+        return new ResponseLoginDTO(token);
+
     }
 
     @Override
