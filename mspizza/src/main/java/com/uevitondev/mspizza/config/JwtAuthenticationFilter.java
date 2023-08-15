@@ -1,7 +1,7 @@
 package com.uevitondev.mspizza.config;
 
-import com.uevitondev.mspizza.services.AuthService;
-import com.uevitondev.mspizza.services.JwtService;
+import com.uevitondev.mspizza.services.auth.AuthService;
+import com.uevitondev.mspizza.services.auth.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

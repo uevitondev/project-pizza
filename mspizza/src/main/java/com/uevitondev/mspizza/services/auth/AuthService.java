@@ -1,9 +1,10 @@
-package com.uevitondev.mspizza.services;
+package com.uevitondev.mspizza.services.auth;
 
 import com.uevitondev.mspizza.dtos.ResponseLoginDTO;
 import com.uevitondev.mspizza.dtos.UserLoginDTO;
 import com.uevitondev.mspizza.entities.User;
 import com.uevitondev.mspizza.repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,8 +31,10 @@ public class AuthService implements UserDetailsService {
 
     }
 
+    @Transactional
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        return userRepository.findByEmail(userName);
+        return userRepository.findByEmail(userName)
+                .orElseThrow(() -> new UsernameNotFoundException("Bad Credentials!"));
     }
 }

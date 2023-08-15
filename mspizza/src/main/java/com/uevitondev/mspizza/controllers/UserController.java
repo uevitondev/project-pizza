@@ -1,4 +1,4 @@
-package com.uevitondev.mspizza.contollers;
+package com.uevitondev.mspizza.controllers;
 
 import com.uevitondev.mspizza.dtos.UserDTO;
 import com.uevitondev.mspizza.services.UserService;

@@ -1,4 +1,4 @@
-package com.uevitondev.mspizza.services;
+package com.uevitondev.mspizza.services.auth;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

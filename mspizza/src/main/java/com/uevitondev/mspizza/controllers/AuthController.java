@@ -1,8 +1,8 @@
-package com.uevitondev.mspizza.contollers;
+package com.uevitondev.mspizza.controllers;
 
 import com.uevitondev.mspizza.dtos.ResponseLoginDTO;
 import com.uevitondev.mspizza.dtos.UserLoginDTO;
-import com.uevitondev.mspizza.services.AuthService;
+import com.uevitondev.mspizza.services.auth.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

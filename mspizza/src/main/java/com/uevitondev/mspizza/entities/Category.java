@@ -41,17 +41,17 @@ public class Category implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Category role = (Category) o;
-        return Objects.equals(id, role.id) && Objects.equals(name, role.name);
+        Category category = (Category) o;
+        return Objects.equals(id, category.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
-        return "Role{" + "id=" + id + ", name='" + name + '}';
+        return "Category{" + "id=" + id + ", name='" + name + '\'' + '}';
     }
 }
