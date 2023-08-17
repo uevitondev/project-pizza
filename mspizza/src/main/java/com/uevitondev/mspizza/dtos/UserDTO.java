@@ -30,11 +30,7 @@ public class UserDTO implements Serializable {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.email = user.getEmail();
-        this.roles = user
-                .getRoles()
-                .stream()
-                .map(role -> new RoleDTO(role))
-                .toList();
+        this.roles = user.getRoles().stream().map(RoleDTO::new).toList();
     }
 
     public Long getId() {

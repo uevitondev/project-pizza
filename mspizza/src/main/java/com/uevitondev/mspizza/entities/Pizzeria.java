@@ -8,19 +8,20 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_category")
-public class Category implements Serializable {
+@Table(name = "tb_pizzeria")
+public class Pizzeria implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @OneToMany(mappedBy = "category")
-    private List<Product> products = new ArrayList<>();
+    @OneToMany(mappedBy = "pizzeria")
+    private final List<Product> products = new ArrayList<>();
 
-    public Category() {
+    public Pizzeria() {
+
     }
 
-    public Category(Long id, String name) {
+    public Pizzeria(Long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -41,12 +42,16 @@ public class Category implements Serializable {
         this.name = name;
     }
 
+    public List<Product> getProducts() {
+        return products;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Category category = (Category) o;
-        return Objects.equals(id, category.id);
+        Pizzeria pizzeria = (Pizzeria) o;
+        return Objects.equals(id, pizzeria.id);
     }
 
     @Override
@@ -56,6 +61,6 @@ public class Category implements Serializable {
 
     @Override
     public String toString() {
-        return "Category{" + "id=" + id + ", name='" + name + '\'' + '}';
+        return "Pizzeria{" + "id=" + id + ", name='" + name + '\'' + ", products=" + products + '}';
     }
 }

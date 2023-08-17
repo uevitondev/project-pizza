@@ -14,6 +14,12 @@ public class Product implements Serializable {
     private String name;
     private String description;
     private Double price;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+    @ManyToOne
+    @JoinColumn(name = "pizzeria_id")
+    private Pizzeria pizzeria;
 
     public Product() {
     }
@@ -55,6 +61,14 @@ public class Product implements Serializable {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Pizzeria getPizzeria() {
+        return pizzeria;
+    }
+
+    public void setPizzeria(Pizzeria pizzeria) {
+        this.pizzeria = pizzeria;
     }
 
     @Override
