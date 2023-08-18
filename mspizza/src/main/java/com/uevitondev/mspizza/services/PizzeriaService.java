@@ -6,9 +6,9 @@ import com.uevitondev.mspizza.entities.Pizzeria;
 import com.uevitondev.mspizza.exceptions.ResourceNotFoundException;
 import com.uevitondev.mspizza.repositories.PizzeriaRepository;
 import com.uevitondev.mspizza.repositories.ProductRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,12 +19,12 @@ public class PizzeriaService {
     @Autowired
     private ProductRepository productRepository;
 
-    @Transactional()
+    @Transactional(readOnly = true)
     public List<PizzeriaDTO> getAllPizzerias() {
         return pizzeriaRepository.findAll().stream().map(PizzeriaDTO::new).toList();
     }
 
-    @Transactional()
+    @Transactional
     public PizzeriaDTO getPizzeriaById(Long id) {
         Pizzeria pizzeria = pizzeriaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("pizzeria not found, for id: " + id));

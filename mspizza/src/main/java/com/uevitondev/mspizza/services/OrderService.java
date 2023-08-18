@@ -7,9 +7,9 @@ import com.uevitondev.mspizza.entities.*;
 import com.uevitondev.mspizza.entities.enums.OrderStatus;
 import com.uevitondev.mspizza.exceptions.ResourceNotFoundException;
 import com.uevitondev.mspizza.repositories.*;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
@@ -27,7 +27,7 @@ public class OrderService {
     @Autowired
     private ProductRepository productRepository;
 
-    @Transactional()
+    @Transactional(readOnly = true)
     public List<OrderDTO> getAllOrders() {
         return orderRepository.findAll().stream().map(OrderDTO::new).toList();
     }
@@ -65,9 +65,9 @@ public class OrderService {
         return new OrderDTO(order);
     }
 
-    public void saveOrderItemByOrder(Order order, List<CartItemDTO> cartItens) {
+    public void saveOrderItemByOrder(Order order, List<CartItemDTO> cartItems) {
 
-        for (CartItemDTO cartItem : cartItens) {
+        for (CartItemDTO cartItem : cartItems) {
             OrderItem orderItem = new OrderItem();
             Product product = productRepository.findById(cartItem.getProductId())
                     .orElseThrow(() -> new ResourceNotFoundException("product not found, for id: " + cartItem.getProductId()));

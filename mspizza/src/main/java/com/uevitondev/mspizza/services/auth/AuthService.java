@@ -4,7 +4,6 @@ import com.uevitondev.mspizza.dtos.ResponseLoginDTO;
 import com.uevitondev.mspizza.dtos.UserLoginDTO;
 import com.uevitondev.mspizza.entities.User;
 import com.uevitondev.mspizza.repositories.UserRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AuthService implements UserDetailsService {

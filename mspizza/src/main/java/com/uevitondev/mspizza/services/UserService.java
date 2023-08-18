@@ -4,9 +4,9 @@ import com.uevitondev.mspizza.dtos.UserDTO;
 import com.uevitondev.mspizza.entities.User;
 import com.uevitondev.mspizza.exceptions.ResourceNotFoundException;
 import com.uevitondev.mspizza.repositories.UserRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Transactional()
+    @Transactional(readOnly = true)
     public List<UserDTO> getAllUsers() {
         return userRepository
                 .findAll()
@@ -25,7 +25,7 @@ public class UserService {
 
     }
 
-    @Transactional()
+    @Transactional
     public UserDTO getUserById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("user not found, for id: " + id));
