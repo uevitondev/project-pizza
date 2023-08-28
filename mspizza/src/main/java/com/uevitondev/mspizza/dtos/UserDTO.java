@@ -11,18 +11,20 @@ public class UserDTO implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
-    List<RoleDTO> roles = new ArrayList<>();
+    private String password;
+    private List<Long> rolesId = new ArrayList<>();
 
     public UserDTO() {
 
     }
 
-    public UserDTO(Long id, String firstName, String lastName, String email, List<RoleDTO> roles) {
+    public UserDTO(Long id, String firstName, String lastName, String email, String password, List<Long> rolesId) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.roles = roles;
+        this.password = password;
+        this.rolesId = rolesId;
     }
 
     public UserDTO(User user) {
@@ -30,7 +32,8 @@ public class UserDTO implements Serializable {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.email = user.getEmail();
-        this.roles = user.getRoles().stream().map(RoleDTO::new).toList();
+        this.password = user.getPassword();
+        user.getRoles().stream().map(role -> this.rolesId.add(role.getId())).toList();
     }
 
     public Long getId() {
@@ -65,11 +68,19 @@ public class UserDTO implements Serializable {
         this.email = email;
     }
 
-    public List<RoleDTO> getRoles() {
-        return roles;
+    public String getPassword() {
+        return password;
     }
 
-    public void setRoles(List<RoleDTO> roles) {
-        this.roles = roles;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<Long> getRolesId() {
+        return rolesId;
+    }
+
+    public void setRolesId(List<Long> rolesId) {
+        this.rolesId = rolesId;
     }
 }

@@ -4,7 +4,7 @@ import com.uevitondev.mspizza.dtos.CartItemDTO;
 import com.uevitondev.mspizza.dtos.OrderDTO;
 import com.uevitondev.mspizza.dtos.ShoppingCartDTO;
 import com.uevitondev.mspizza.entities.*;
-import com.uevitondev.mspizza.entities.enums.OrderStatus;
+import com.uevitondev.mspizza.enums.OrderStatus;
 import com.uevitondev.mspizza.exceptions.ResourceNotFoundException;
 import com.uevitondev.mspizza.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class OrderService {
         return orderRepository.findAll().stream().map(OrderDTO::new).toList();
     }
 
-    @Transactional()
+    @Transactional(readOnly = true)
     public OrderDTO getOrderById(Long id) {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("order not found, for id: " + id));

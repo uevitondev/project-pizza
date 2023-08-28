@@ -5,11 +5,10 @@ import com.uevitondev.mspizza.dtos.ProductDTO;
 import com.uevitondev.mspizza.services.PizzeriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -26,6 +25,26 @@ public class PizzeriaController {
     @GetMapping("/{id}")
     public ResponseEntity<PizzeriaDTO> getPizzeriaById(@PathVariable Long id) {
         return ResponseEntity.ok().body(pizzeriaService.getPizzeriaById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<PizzeriaDTO> insertNewPizzeria(@RequestBody PizzeriaDTO dto) {
+        dto = pizzeriaService.insertNewPizzeria(dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.created(uri).body(dto);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PizzeriaDTO> updatePizzeriaById(@PathVariable Long id, @RequestBody PizzeriaDTO dto) {
+        dto = pizzeriaService.updatePizzeriaById(id, dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.ok().body(dto);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePizzeriaById(@PathVariable Long id) {
+        pizzeriaService.deletePizzeriaById(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}/products")

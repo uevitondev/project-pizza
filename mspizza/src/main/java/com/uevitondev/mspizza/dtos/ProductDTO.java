@@ -9,17 +9,18 @@ public class ProductDTO implements Serializable {
     private String name;
     private String description;
     private Double price;
+    private Long categoryId;
     private Long pizzeriaId;
 
     public ProductDTO() {
-
     }
 
-    public ProductDTO(Long id, String name, String description, Double price, Long pizzeriaId) {
+    public ProductDTO(Long id, String name, String description, Double price, Long categoryId, Long pizzeriaId) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
+        this.categoryId = categoryId;
         this.pizzeriaId = pizzeriaId;
     }
 
@@ -28,6 +29,7 @@ public class ProductDTO implements Serializable {
         this.name = product.getName();
         this.description = product.getDescription();
         this.price = product.getPrice();
+        this.categoryId = product.getCategory().getId();
         this.pizzeriaId = product.getPizzeria().getId();
     }
 
@@ -61,6 +63,14 @@ public class ProductDTO implements Serializable {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     public Long getPizzeriaId() {

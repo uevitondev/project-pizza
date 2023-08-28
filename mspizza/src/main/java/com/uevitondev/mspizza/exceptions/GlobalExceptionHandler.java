@@ -15,7 +15,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(BadCredentialsException.class)
-    ProblemDetail resourceNotFound(BadCredentialsException e) {
-        return ProblemDetail.forStatusAndDetail(HttpStatus.FORBIDDEN, e.getLocalizedMessage());
+    ProblemDetail badCredentials(BadCredentialsException e) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, e.getLocalizedMessage());
     }
+
+    @ExceptionHandler(DatabaseException.class)
+    ProblemDetail dataIntegrityViolation(DatabaseException e) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.UNPROCESSABLE_ENTITY, e.getLocalizedMessage());
+    }
+
 }
