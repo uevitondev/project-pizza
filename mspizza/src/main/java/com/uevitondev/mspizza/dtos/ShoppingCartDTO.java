@@ -1,13 +1,22 @@
 package com.uevitondev.mspizza.dtos;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingCartDTO implements Serializable {
+    @NotNull(message = "userId: O id do usuario deve ser informado!")
     private Long userId;
+    @NotNull(message = "pizzeriaId: O id da pizzeria deve ser informado!")
     private Long pizzeriaId;
+    @NotEmpty(message = "description: A descrição do pedido deve ser informado!")
+    @Size(min = 15, max = 255, message = "description: ")
     private String description;
+    @NotEmpty(message = "cartItens: Informe os itens de pedido!")
     private List<CartItemDTO> cartItens = new ArrayList<>();
 
     public ShoppingCartDTO() {

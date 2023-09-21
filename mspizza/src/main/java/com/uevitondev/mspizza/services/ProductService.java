@@ -28,12 +28,12 @@ public class ProductService {
     private PizzeriaRepository pizzeriaRepository;
 
     @Transactional(readOnly = true)
-    public List<ProductDTO> getAllProducts() {
+    public List<ProductDTO> findAllProducts() {
         return productRepository.findAll().stream().map(ProductDTO::new).toList();
     }
 
     @Transactional(readOnly = true)
-    public ProductDTO getProductById(Long id) {
+    public ProductDTO findProductById(Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("product not found, for id: " + id));
         return new ProductDTO(product);
@@ -46,7 +46,7 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductDTO updateProduct(Long id, ProductDTO dto) {
+    public ProductDTO updateProductById(Long id, ProductDTO dto) {
 
         Category category = categoryRepository.findById(dto.getCategoryId())
                 .orElseThrow(() -> new ResourceNotFoundException("category not found, for id: " + dto.getCategoryId()));
@@ -69,7 +69,7 @@ public class ProductService {
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
-    public void deleteProduct(Long id) {
+    public void deleteProductById(Long id) {
         if (!productRepository.existsById(id)) {
             throw new ResourceNotFoundException("product not found, for id: " + id);
         }

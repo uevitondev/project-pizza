@@ -17,13 +17,13 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<ProductDTO>> getAllProducts() {
-        return ResponseEntity.ok().body(productService.getAllProducts());
+    public ResponseEntity<List<ProductDTO>> findAllProducts() {
+        return ResponseEntity.ok().body(productService.findAllProducts());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id) {
-        return ResponseEntity.ok().body(productService.getProductById(id));
+    public ResponseEntity<ProductDTO> findProductById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(productService.findProductById(id));
     }
 
     @PostMapping
@@ -38,14 +38,14 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long id, @RequestBody ProductDTO dto) {
-        dto = productService.updateProduct(id, dto);
+    public ResponseEntity<ProductDTO> updateProductById(@PathVariable Long id, @RequestBody ProductDTO dto) {
+        dto = productService.updateProductById(id, dto);
         return ResponseEntity.ok().body(dto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        productService.deleteProduct(id);
+    public ResponseEntity<Void> deleteProductById(@PathVariable Long id) {
+        productService.deleteProductById(id);
         return ResponseEntity.noContent().build();
     }
 }

@@ -1,6 +1,8 @@
 package com.uevitondev.mspizza.dtos;
 
 import com.uevitondev.mspizza.entities.User;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,9 +10,14 @@ import java.util.List;
 
 public class UserDTO implements Serializable {
     private Long id;
+    @NotBlank(message = "Não pode ser vazio!")
     private String firstName;
+    @NotBlank(message = "Não pode ser vazio!")
     private String lastName;
+    @NotBlank(message = "Não pode ser vazio!")
+    @Email(message = "Endereço de email incorreto!")
     private String email;
+    @NotBlank(message = "Não pode ser vazio!")
     private String password;
     private List<Long> rolesId = new ArrayList<>();
 
