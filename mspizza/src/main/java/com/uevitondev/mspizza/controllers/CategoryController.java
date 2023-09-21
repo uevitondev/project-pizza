@@ -18,12 +18,12 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<List<CategoryDTO>> getAllCategories() {
-        return ResponseEntity.ok().body(categoryService.getAllCategories());
+        return ResponseEntity.ok().body(categoryService.findAllCategories());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable Long id) {
-        return ResponseEntity.ok().body(categoryService.getCategoryById(id));
+        return ResponseEntity.ok().body(categoryService.findCategoryById(id));
     }
 
     @PostMapping

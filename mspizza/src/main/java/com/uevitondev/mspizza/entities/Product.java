@@ -15,10 +15,10 @@ public class Product implements Serializable {
     @Column(columnDefinition = "TEXT")
     private String description;
     private Double price;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pizzeria_id")
     private Pizzeria pizzeria;
 

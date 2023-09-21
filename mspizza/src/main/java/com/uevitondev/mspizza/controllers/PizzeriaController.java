@@ -19,12 +19,12 @@ public class PizzeriaController {
 
     @GetMapping
     public ResponseEntity<List<PizzeriaDTO>> getAllPizzerias() {
-        return ResponseEntity.ok().body(pizzeriaService.getAllPizzerias());
+        return ResponseEntity.ok().body(pizzeriaService.findAllPizzerias());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PizzeriaDTO> getPizzeriaById(@PathVariable Long id) {
-        return ResponseEntity.ok().body(pizzeriaService.getPizzeriaById(id));
+        return ResponseEntity.ok().body(pizzeriaService.findPizzeriaById(id));
     }
 
     @PostMapping

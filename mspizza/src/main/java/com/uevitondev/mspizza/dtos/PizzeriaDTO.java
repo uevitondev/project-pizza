@@ -20,15 +20,15 @@ public class PizzeriaDTO implements Serializable {
         this.name = name;
     }
 
+    public PizzeriaDTO(Pizzeria pizzeria) {
+        this.id = pizzeria.getId();
+        this.name = pizzeria.getName();
+    }
+
     public PizzeriaDTO(Pizzeria pizzeria, List<Product> products) {
         this.id = pizzeria.getId();
         this.name = pizzeria.getName();
         this.products = products.stream().map(ProductDTO::new).toList();
-    }
-
-    public PizzeriaDTO(Pizzeria pizzeria) {
-        this.id = pizzeria.getId();
-        this.name = pizzeria.getName();
     }
 
     public Long getId() {

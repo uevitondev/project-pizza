@@ -28,12 +28,12 @@ public class OrderService {
     private ProductRepository productRepository;
 
     @Transactional(readOnly = true)
-    public List<OrderDTO> getAllOrders() {
+    public List<OrderDTO> findAllOrders() {
         return orderRepository.findAll().stream().map(OrderDTO::new).toList();
     }
 
     @Transactional(readOnly = true)
-    public OrderDTO getOrderById(Long id) {
+    public OrderDTO findOrderById(Long id) {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("order not found, for id: " + id));
         return new OrderDTO(order);

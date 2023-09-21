@@ -27,13 +27,13 @@ public class UserService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
-    public List<UserDTO> getAllUsers() {
+    public List<UserDTO> findAllUsers() {
         return userRepository.findAll().stream().map(UserDTO::new).toList();
 
     }
 
     @Transactional(readOnly = true)
-    public UserDTO getUserById(Long id) {
+    public UserDTO findUserById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("user not found, for id: " + id));
         return new UserDTO(user);

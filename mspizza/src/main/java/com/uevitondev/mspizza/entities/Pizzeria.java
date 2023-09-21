@@ -3,9 +3,9 @@ package com.uevitondev.mspizza.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_pizzeria")
@@ -15,7 +15,7 @@ public class Pizzeria implements Serializable {
     private Long id;
     private String name;
     @OneToMany(mappedBy = "pizzeria")
-    private final List<Product> products = new ArrayList<>();
+    private final Set<Product> products = new HashSet<>();
 
     public Pizzeria() {
 
@@ -42,7 +42,7 @@ public class Pizzeria implements Serializable {
         this.name = name;
     }
 
-    public List<Product> getProducts() {
+    public Set<Product> getProducts() {
         return products;
     }
 
@@ -57,10 +57,5 @@ public class Pizzeria implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
-    }
-
-    @Override
-    public String toString() {
-        return "Pizzeria{" + "id=" + id + ", name='" + name + '\'' + ", products=" + products + '}';
     }
 }

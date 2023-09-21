@@ -28,12 +28,12 @@ public class WebSecurityConfig {
                         .permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/auth"))
                         .permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/products"))
-                        .permitAll()
-                        //.requestMatchers(new AntPathRequestMatcher("/users"))
-                        //.hasAuthority("ADMIN")
                         .anyRequest()
                         .permitAll())
+                        /*.requestMatchers(new AntPathRequestMatcher("/users"))
+                        .hasAuthority("ADMIN")
+                        .anyRequest()
+                        .authenticated())*/
                 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

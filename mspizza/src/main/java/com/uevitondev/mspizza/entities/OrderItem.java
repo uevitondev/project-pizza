@@ -13,10 +13,10 @@ public class OrderItem implements Serializable {
     private Long id;
     private Integer qtd;
     private Double subtotal;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
 

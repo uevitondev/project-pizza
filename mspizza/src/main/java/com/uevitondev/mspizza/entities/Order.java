@@ -18,10 +18,10 @@ public class Order implements Serializable {
     private String description;
     private String status;
     private Double total;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pizzeria_id")
     private Pizzeria pizzeria;
     @OneToMany(mappedBy = "order")

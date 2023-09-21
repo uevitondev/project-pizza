@@ -24,15 +24,15 @@ public class PizzeriaService {
     private ProductRepository productRepository;
 
     @Transactional(readOnly = true)
-    public List<PizzeriaDTO> getAllPizzerias() {
+    public List<PizzeriaDTO> findAllPizzerias() {
         return pizzeriaRepository.findAll().stream().map(PizzeriaDTO::new).toList();
     }
 
     @Transactional(readOnly = true)
-    public PizzeriaDTO getPizzeriaById(Long id) {
+    public PizzeriaDTO findPizzeriaById(Long id) {
         Pizzeria pizzeria = pizzeriaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("pizzeria not found, for id: " + id));
-        return new PizzeriaDTO(pizzeria, pizzeria.getProducts());
+        return new PizzeriaDTO(pizzeria);
     }
 
     @Transactional

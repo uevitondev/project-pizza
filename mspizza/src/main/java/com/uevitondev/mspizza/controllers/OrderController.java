@@ -18,13 +18,13 @@ public class OrderController {
 
 
     @GetMapping
-    public ResponseEntity<List<OrderDTO>> getAllOrders() {
-        return ResponseEntity.ok().body(orderService.getAllOrders());
+    public ResponseEntity<List<OrderDTO>> findAllOrders() {
+        return ResponseEntity.ok().body(orderService.findAllOrders());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderDTO> getOrderById(@PathVariable Long id) {
-        return ResponseEntity.ok().body(orderService.getOrderById(id));
+    public ResponseEntity<OrderDTO> findOrderById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(orderService.findOrderById(id));
     }
 
     @PostMapping
