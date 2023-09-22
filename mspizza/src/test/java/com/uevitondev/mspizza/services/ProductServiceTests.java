@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
-public class ProductServiceTests {
+class ProductServiceTests {
     @InjectMocks
     private ProductService productService;
     @Mock

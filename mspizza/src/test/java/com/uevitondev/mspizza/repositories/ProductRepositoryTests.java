@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @DataJpaTest
-public class ProductRepositoryTests {
+class ProductRepositoryTests {
     @Autowired
     private ProductRepository productRepository;
     private long existingId;
