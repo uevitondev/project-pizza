@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_order")
@@ -25,7 +25,7 @@ public class Order implements Serializable {
     @JoinColumn(name = "pizzeria_id")
     private Pizzeria pizzeria;
     @OneToMany(mappedBy = "order")
-    private List<OrderItem> orderItems = new ArrayList<>();
+    private Set<OrderItem> orderItems = new HashSet<>();
 
     public Order() {
     }
@@ -94,7 +94,7 @@ public class Order implements Serializable {
         this.pizzeria = pizzeria;
     }
 
-    public List<OrderItem> getOrderItems() {
+    public Set<OrderItem> getOrderItems() {
         return orderItems;
     }
 }
