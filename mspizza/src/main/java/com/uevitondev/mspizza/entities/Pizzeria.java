@@ -15,7 +15,7 @@ public class Pizzeria implements Serializable {
     private Long id;
     private String name;
     @OneToMany(mappedBy = "pizzeria")
-    private Set<Product> products = new HashSet<>();
+    private final Set<Product> products = new HashSet<>();
 
     public Pizzeria() {
 

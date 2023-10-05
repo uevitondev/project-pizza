@@ -1,9 +1,15 @@
 package com.uevitondev.mspizza.dtos;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+
 import java.io.Serializable;
 
 public class CartItemDTO implements Serializable {
+    @NotNull(message = "productId: is mandatory")
     private Long productId;
+    @NotNull(message = "qtd: is mandatory")
+    @Min(value = 1, message = "qtd: minimum value = 1")
     private Integer qtd;
 
     public CartItemDTO() {

@@ -1,6 +1,7 @@
 package com.uevitondev.mspizza.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -13,9 +14,10 @@ public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
     @OneToMany(mappedBy = "category")
-    private Set<Product> products = new HashSet<>();
+    private final Set<Product> products = new HashSet<>();
+    @NotBlank(message = "name: is mandatory")
+    private String name;
 
     public Category() {
     }

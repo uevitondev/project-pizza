@@ -1,25 +1,27 @@
 package com.uevitondev.mspizza.dtos;
 
 import com.uevitondev.mspizza.entities.Role;
+import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serializable;
 
 public class RoleDTO implements Serializable {
     private Long id;
-    private String name;
+    @NotBlank(message = "authority: is mandatory")
+    private String authority;
 
     public RoleDTO() {
 
     }
 
-    public RoleDTO(Long id, String name) {
+    public RoleDTO(Long id, String authority) {
         this.id = id;
-        this.name = name;
+        this.authority = authority;
     }
 
     public RoleDTO(Role role) {
         this.id = role.getId();
-        this.name = role.getName();
+        this.authority = role.getAuthority();
     }
 
     public Long getId() {
@@ -30,11 +32,11 @@ public class RoleDTO implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getAuthority() {
+        return authority;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
 }

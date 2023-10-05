@@ -1,12 +1,13 @@
 package com.uevitondev.mspizza.dtos;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ShoppingCartDTO implements Serializable {
     @NotNull(message = "userId: is mandatory")
@@ -15,18 +16,17 @@ public class ShoppingCartDTO implements Serializable {
     private Long pizzeriaId;
     @NotBlank(message = "description: is mandatory")
     private String description;
-    @NotEmpty(message = "cartItens: cannot be empty")
-    private List<CartItemDTO> cartItens = new ArrayList<>();
+    @NotEmpty(message = "cartItems: cannot be empty")
+    private final Set<@Valid CartItemDTO> cartItems = new HashSet<>();
 
     public ShoppingCartDTO() {
 
     }
 
-    public ShoppingCartDTO(Long userId, Long pizzeriaId, String description, List<CartItemDTO> cartItens) {
+    public ShoppingCartDTO(Long userId, Long pizzeriaId, String description) {
         this.userId = userId;
         this.pizzeriaId = pizzeriaId;
         this.description = description;
-        this.cartItens = cartItens;
     }
 
     public Long getUserId() {
@@ -53,11 +53,7 @@ public class ShoppingCartDTO implements Serializable {
         this.description = description;
     }
 
-    public List<CartItemDTO> getCartItens() {
-        return cartItens;
-    }
-
-    public void setCartItens(List<CartItemDTO> cartItens) {
-        this.cartItens = cartItens;
+    public Set<CartItemDTO> getCartItems() {
+        return cartItems;
     }
 }

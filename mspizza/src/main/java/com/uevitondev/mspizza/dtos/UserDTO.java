@@ -4,6 +4,7 @@ import com.uevitondev.mspizza.entities.Role;
 import com.uevitondev.mspizza.entities.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -11,37 +12,38 @@ import java.util.Set;
 
 public class UserDTO implements Serializable {
     private Long id;
-    @NotBlank(message = "Não pode ser vazio!")
+    @NotBlank(message = "firstName: is mandatory")
     private String firstName;
-    @NotBlank(message = "Não pode ser vazio!")
+    @NotBlank(message = "lastName: is mandatory")
     private String lastName;
-    @NotBlank(message = "Não pode ser vazio!")
-    @Email(message = "Endereço de email incorreto!")
+    @NotBlank(message = "email: is mandatory")
+    @Email(message = "email: is invalid")
     private String email;
-    @NotBlank(message = "Não pode ser vazio!")
+    @NotBlank(message = "password: is mandatory")
     private String password;
-    private Set<Long> rolesId = new HashSet<>();
+
+    @NotEmpty(message = "rolesId: is empty")
+    private final Set<Long> rolesId = new HashSet<>();
 
     public UserDTO() {
 
     }
 
-    public UserDTO(Long id, String firstName, String lastName, String email, String password, Set<Long> rolesId) {
+    public UserDTO(Long id, String firstName, String lastName, String email, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.rolesId = rolesId;
     }
 
-    public UserDTO(User user, HashSet<Role> roles) {
+    public UserDTO(User user, Set<Role> roles) {
         this.id = user.getId();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.email = user.getEmail();
         this.password = user.getPassword();
-        roles.stream().map(role -> this.rolesId.add(role.getId()));
+        roles.forEach(role -> this.rolesId.add(role.getId()));
     }
 
     public UserDTO(User user) {
@@ -93,9 +95,5 @@ public class UserDTO implements Serializable {
 
     public Set<Long> getRolesId() {
         return rolesId;
-    }
-
-    public void setRolesId(Set<Long> rolesId) {
-        this.rolesId = rolesId;
     }
 }

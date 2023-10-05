@@ -23,9 +23,9 @@ public class User implements Serializable, UserDetails {
     private String password;
     @ManyToMany
     @JoinTable(name = "tb_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    private final Set<Role> roles = new HashSet<>();
     @OneToMany(mappedBy = "user")
-    private Set<Order> orders = new HashSet<>();
+    private final Set<Order> orders = new HashSet<>();
 
     public User() {
     }
@@ -84,7 +84,7 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).toList();
+        return this.roles.stream().map(role -> new SimpleGrantedAuthority(role.getAuthority())).toList();
     }
 
     public String getPassword() {
@@ -93,7 +93,7 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return getEmail();
     }
 
     @Override

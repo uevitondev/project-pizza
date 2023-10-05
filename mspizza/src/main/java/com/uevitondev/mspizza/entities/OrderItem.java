@@ -49,8 +49,8 @@ public class OrderItem implements Serializable {
         return subtotal;
     }
 
-    public void setSubtotal(Double subtotal) {
-        this.subtotal = subtotal;
+    public void setSubtotal() {
+        this.subtotal = this.product.getPrice() * this.qtd;
     }
 
     public Product getProduct() {
@@ -80,10 +80,5 @@ public class OrderItem implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
-    }
-
-    @Override
-    public String toString() {
-        return "OrderItem{" + "id=" + id + ", qtd=" + qtd + ", subtotal=" + subtotal + ", product=" + product + ", order=" + order + '}';
     }
 }

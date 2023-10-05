@@ -2,15 +2,18 @@ package com.uevitondev.mspizza.dtos;
 
 import com.uevitondev.mspizza.entities.Pizzeria;
 import com.uevitondev.mspizza.entities.Product;
+import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PizzeriaDTO implements Serializable {
     private Long id;
+    @NotBlank(message = "name: is mandatory")
     private String name;
-    private List<ProductDTO> products = new ArrayList<>();
+    private final Set<ProductDTO> products = new HashSet<>();
 
     public PizzeriaDTO() {
     }
@@ -28,7 +31,7 @@ public class PizzeriaDTO implements Serializable {
     public PizzeriaDTO(Pizzeria pizzeria, List<Product> products) {
         this.id = pizzeria.getId();
         this.name = pizzeria.getName();
-        this.products = products.stream().map(ProductDTO::new).toList();
+        products.forEach(product -> this.products.add(new ProductDTO(product)));
     }
 
     public Long getId() {
@@ -47,11 +50,7 @@ public class PizzeriaDTO implements Serializable {
         this.name = name;
     }
 
-    public List<ProductDTO> getProducts() {
+    public Set<ProductDTO> getProducts() {
         return products;
-    }
-
-    public void setProducts(List<ProductDTO> products) {
-        this.products = products;
     }
 }

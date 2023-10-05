@@ -25,7 +25,7 @@ public class Order implements Serializable {
     @JoinColumn(name = "pizzeria_id")
     private Pizzeria pizzeria;
     @OneToMany(mappedBy = "order")
-    private Set<OrderItem> orderItems = new HashSet<>();
+    private final Set<OrderItem> orderItems = new HashSet<>();
 
     public Order() {
     }
@@ -74,8 +74,12 @@ public class Order implements Serializable {
         return total;
     }
 
-    public void setTotal(Double total) {
-        this.total = total;
+    public void setTotal() {
+        double sum = 0.0;
+        for (OrderItem orderItem : getOrderItems()) {
+            sum += orderItem.getSubtotal();
+        }
+        this.total = sum;
     }
 
     public User getUser() {

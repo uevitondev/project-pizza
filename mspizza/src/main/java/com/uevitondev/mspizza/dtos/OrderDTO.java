@@ -4,8 +4,8 @@ import com.uevitondev.mspizza.entities.Order;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class OrderDTO implements Serializable {
     private Long id;
@@ -15,7 +15,7 @@ public class OrderDTO implements Serializable {
     private Double total;
     private Long userId;
     private Long pizzeriaId;
-    private List<OrderItemDTO> orderItems = new ArrayList<>();
+    private final Set<OrderItemDTO> orderItems = new HashSet<>();
 
     public OrderDTO() {
     }
@@ -38,7 +38,7 @@ public class OrderDTO implements Serializable {
         this.total = order.getTotal();
         this.userId = order.getUser().getId();
         this.pizzeriaId = order.getPizzeria().getId();
-        this.orderItems = order.getOrderItems().stream().map(OrderItemDTO::new).toList();
+        order.getOrderItems().forEach(orderItem -> this.orderItems.add(new OrderItemDTO(orderItem)));
     }
 
     public Long getId() {
@@ -97,11 +97,7 @@ public class OrderDTO implements Serializable {
         this.pizzeriaId = pizzeriaId;
     }
 
-    public List<OrderItemDTO> getOrderItems() {
+    public Set<OrderItemDTO> getOrderItems() {
         return orderItems;
-    }
-
-    public void setOrderItems(List<OrderItemDTO> orderItems) {
-        this.orderItems = orderItems;
     }
 }

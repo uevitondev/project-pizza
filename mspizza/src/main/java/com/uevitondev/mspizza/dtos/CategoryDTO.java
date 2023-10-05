@@ -2,6 +2,7 @@ package com.uevitondev.mspizza.dtos;
 
 import com.uevitondev.mspizza.entities.Category;
 import com.uevitondev.mspizza.entities.Product;
+import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -9,8 +10,9 @@ import java.util.Set;
 
 public class CategoryDTO implements Serializable {
     private Long id;
+    @NotBlank(message = "name: is mandatory")
     private String name;
-    private Set<ProductDTO> products = new HashSet<>();
+    private final Set<ProductDTO> products = new HashSet<>();
 
     public CategoryDTO() {
 
@@ -29,7 +31,7 @@ public class CategoryDTO implements Serializable {
     public CategoryDTO(Category category, Set<Product> products) {
         this.id = category.getId();
         this.name = category.getName();
-        products.stream().map(product -> this.products.add(new ProductDTO(product)));
+        products.forEach(product -> this.products.add(new ProductDTO(product)));
     }
 
 
@@ -47,5 +49,9 @@ public class CategoryDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<ProductDTO> getProducts() {
+        return products;
     }
 }

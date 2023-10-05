@@ -1,15 +1,22 @@
 package com.uevitondev.mspizza.dtos;
 
 import com.uevitondev.mspizza.entities.Product;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 
 public class ProductDTO implements Serializable {
     private Long id;
+    @NotBlank(message = "name: is mandatory")
     private String name;
+    @NotBlank(message = "description: is mandatory")
     private String description;
+    @NotNull(message = "price: is mandatory")
     private Double price;
+    @NotNull(message = "categoryId: is mandatory")
     private Long categoryId;
+    @NotNull(message = "pizzeriaId: is mandatory")
     private Long pizzeriaId;
 
     public ProductDTO() {

@@ -7,12 +7,14 @@ import com.uevitondev.mspizza.entities.*;
 import com.uevitondev.mspizza.enums.OrderStatus;
 import com.uevitondev.mspizza.exceptions.ResourceNotFoundException;
 import com.uevitondev.mspizza.repositories.*;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class OrderService {
@@ -42,43 +44,41 @@ public class OrderService {
     @Transactional
     public OrderDTO insertNewOrder(ShoppingCartDTO dto) {
 
-        User user = userRepository.findById(dto.getUserId())
-                .orElseThrow(() -> new ResourceNotFoundException("user not found, for id: " + dto.getUserId()));
-
-        Pizzeria pizzeria = pizzeriaRepository.findById(dto.getPizzeriaId())
-                .orElseThrow(() -> new ResourceNotFoundException("pizzeria not found, for id: " + dto.getPizzeriaId()));
-
+        if (!userRepository.existsById(dto.getUserId())) {
+            throw new ResourceNotFoundException("user not found, id: " + dto.getUserId());
+        }
+        if (!userRepository.existsById(dto.getPizzeriaId())) {
+            throw new ResourceNotFoundException("pizzeria not found, id: " + dto.getUserId());
+        }
         Order order = new Order();
+        User user = userRepository.getReferenceById(dto.getUserId());
+        Pizzeria pizzeria = pizzeriaRepository.getReferenceById(dto.getPizzeriaId());
         order.setInstant(Instant.now());
         order.setDescription(dto.getDescription());
         order.setStatus(OrderStatus.PENDENTE.toString());
         order.setUser(user);
         order.setPizzeria(pizzeria);
-
-        saveOrderItemByOrder(order, dto.getCartItens());
-        Double total = 0.0;
-        for (OrderItem orderItem : order.getOrderItems()) {
-            total += orderItem.getSubtotal();
-        }
-        order.setTotal(total);
+        saveOrderItemByOrder(order, dto.getCartItems());
+        order.setTotal();
         order = orderRepository.save(order);
         return new OrderDTO(order);
     }
 
-    public void saveOrderItemByOrder(Order order, List<CartItemDTO> cartItems) {
+    public void saveOrderItemByOrder(Order order, Set<CartItemDTO> cartItemsDto) {
 
-        for (CartItemDTO cartItem : cartItems) {
-            OrderItem orderItem = new OrderItem();
-            Product product = productRepository.findById(cartItem.getProductId())
-                    .orElseThrow(() -> new ResourceNotFoundException("product not found, for id: " + cartItem.getProductId()));
-
-            orderItem.setProduct(product);
-            orderItem.setQtd(cartItem.getQtd());
-            orderItem.setOrder(order);
-            Double subtotal = cartItem.getQtd() * product.getPrice();
-            orderItem.setSubtotal(subtotal);
-            order.getOrderItems().add(orderItem);
-            orderItemRepository.save(orderItem);
+        for (CartItemDTO cartItem : cartItemsDto) {
+            try {
+                Product product = productRepository.getReferenceById(cartItem.getProductId());
+                OrderItem orderItem = new OrderItem();
+                orderItem.setProduct(product);
+                orderItem.setQtd(cartItem.getQtd());
+                orderItem.setSubtotal();
+                orderItem.setOrder(order);
+                order.getOrderItems().add(orderItem);
+                orderItemRepository.save(orderItem);
+            } catch (EntityNotFoundException e) {
+                throw new ResourceNotFoundException("product not found, id: " + cartItem.getProductId());
+            }
         }
     }
 }

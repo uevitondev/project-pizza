@@ -15,7 +15,7 @@ import java.util.List;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     protected ResponseEntity<ProblemDetail> resourceNotFound(ResourceNotFoundException e) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, "ResourceNotFoundException");
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, "ResourceNotFoundException");
         problemDetail.setDetail("Resource error");
         problemDetail.setProperty("errors", List.of(e.getLocalizedMessage()) );
 
@@ -54,4 +54,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(problemDetail);
     }
+
+
 }
