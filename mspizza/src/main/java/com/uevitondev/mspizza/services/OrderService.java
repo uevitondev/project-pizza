@@ -61,11 +61,11 @@ public class OrderService {
         saveOrderItemByOrder(order, dto.getCartItems());
         order.setTotal();
         order = orderRepository.save(order);
+
         return new OrderDTO(order);
     }
 
     public void saveOrderItemByOrder(Order order, Set<CartItemDTO> cartItemsDto) {
-
         for (CartItemDTO cartItem : cartItemsDto) {
             try {
                 Product product = productRepository.getReferenceById(cartItem.getProductId());
