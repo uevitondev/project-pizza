@@ -34,11 +34,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(DatabaseException.class)
     protected ResponseEntity<ProblemDetail> dataIntegrityViolation(DatabaseException e) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.UNPROCESSABLE_ENTITY, "DatabaseException");
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, "DatabaseException");
         problemDetail.setDetail("Database error");
         problemDetail.setProperty("errors", List.of(e.getLocalizedMessage()) );
 
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(problemDetail);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(problemDetail);
     }
 
     @Override
