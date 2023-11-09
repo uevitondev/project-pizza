@@ -10,7 +10,6 @@ import java.util.Set;
 public class OrderDTO implements Serializable {
     private Long id;
     private Instant instant;
-    private String description;
     private String status;
     private Double total;
     private Long userId;
@@ -20,10 +19,9 @@ public class OrderDTO implements Serializable {
     public OrderDTO() {
     }
 
-    public OrderDTO(Long id, Instant instant, String description, String status, Double total, Long userId, Long pizzeriaId) {
+    public OrderDTO(Long id, Instant instant, String status, Double total, Long userId, Long pizzeriaId) {
         this.id = id;
         this.instant = instant;
-        this.description = description;
         this.status = status;
         this.total = total;
         this.userId = userId;
@@ -33,7 +31,6 @@ public class OrderDTO implements Serializable {
     public OrderDTO(Order order) {
         this.id = order.getId();
         this.instant = order.getInstant();
-        this.description = order.getDescription();
         this.status = order.getStatus();
         this.total = order.getTotal();
         this.userId = order.getUser().getId();
@@ -55,14 +52,6 @@ public class OrderDTO implements Serializable {
 
     public void setInstant(Instant instant) {
         this.instant = instant;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getStatus() {

@@ -6,25 +6,28 @@ import java.io.Serializable;
 
 public class OrderItemDTO implements Serializable {
     private Long id;
-    private Integer qtd;
+    private Integer quantity;
     private Double subtotal;
+    private String observation;
     private ProductDTO product;
 
     public OrderItemDTO() {
 
     }
 
-    public OrderItemDTO(Long id, Integer qtd, Double subtotal, ProductDTO product) {
+    public OrderItemDTO(Long id, Integer quantity, Double subtotal, String observation, ProductDTO product) {
         this.id = id;
-        this.qtd = qtd;
+        this.quantity = quantity;
         this.subtotal = subtotal;
+        this.observation = observation;
         this.product = product;
     }
 
     public OrderItemDTO(OrderItem orderItem) {
         this.id = orderItem.getId();
-        this.qtd = orderItem.getQtd();
+        this.quantity = orderItem.getQuantity();
         this.subtotal = orderItem.getSubtotal();
+        this.observation = orderItem.getObservation();
         this.product = new ProductDTO(orderItem.getProduct());
     }
 
@@ -36,12 +39,12 @@ public class OrderItemDTO implements Serializable {
         this.id = id;
     }
 
-    public Integer getQtd() {
-        return qtd;
+    public Integer getQuantity() {
+        return quantity;
     }
 
-    public void setQtd(Integer qtd) {
-        this.qtd = qtd;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public Double getSubtotal() {
@@ -50,6 +53,14 @@ public class OrderItemDTO implements Serializable {
 
     public void setSubtotal(Double subtotal) {
         this.subtotal = subtotal;
+    }
+
+    public String getObservation() {
+        return observation;
+    }
+
+    public void setObservation(String observation) {
+        this.observation = observation;
     }
 
     public ProductDTO getProduct() {

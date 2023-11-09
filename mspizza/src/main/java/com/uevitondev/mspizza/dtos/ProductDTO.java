@@ -1,10 +1,13 @@
 package com.uevitondev.mspizza.dtos;
 
 import com.uevitondev.mspizza.entities.Product;
+import com.uevitondev.mspizza.entities.ProductImage;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ProductDTO implements Serializable {
     private Long id;
@@ -18,6 +21,8 @@ public class ProductDTO implements Serializable {
     private Long categoryId;
     @NotNull(message = "pizzeriaId: is mandatory")
     private Long pizzeriaId;
+    private final Set<ProductImageDTO> images = new HashSet<>();
+
 
     public ProductDTO() {
     }
@@ -38,6 +43,7 @@ public class ProductDTO implements Serializable {
         this.price = product.getPrice();
         this.categoryId = product.getCategory().getId();
         this.pizzeriaId = product.getPizzeria().getId();
+        product.getImages().forEach(productImage -> this.images.add(new ProductImageDTO(productImage)));
     }
 
     public Long getId() {
@@ -86,5 +92,9 @@ public class ProductDTO implements Serializable {
 
     public void setPizzeriaId(Long pizzeriaId) {
         this.pizzeriaId = pizzeriaId;
+    }
+
+    public Set<ProductImageDTO> getImages() {
+        return images;
     }
 }

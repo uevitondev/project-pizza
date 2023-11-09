@@ -29,10 +29,27 @@ INSERT INTO tb_product (name, description, price, category_id, pizzeria_id) VALU
 INSERT INTO tb_product (name, description, price, category_id, pizzeria_id) VALUES ('American Pizza', 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia', 45.99, 1, 1);
 INSERT INTO tb_product (name, description, price, category_id, pizzeria_id) VALUES ('Tomatoe Pie', 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia', 45.99, 1, 2);
 INSERT INTO tb_product (name, description, price, category_id, pizzeria_id) VALUES ('Margherita', 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia', 45.99, 1, 2);
+INSERT INTO tb_product (name, description, price, category_id, pizzeria_id) VALUES ('Calabresa', 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia', 25.99, 1, 2);
 
-INSERT INTO tb_order (instant, description, status, total, user_id, pizzeria_id) VALUES ('2023-08-16T21:12:27.198940800Z', 'Far far away, behind the word mountains', 'CANCELADO', 50.00, 1, 1);
-INSERT INTO tb_order (instant, description, status, total, user_id, pizzeria_id) VALUES ('2023-08-16T21:12:27.198940800Z', 'Far far away, behind the word mountains', 'CANCELADO', 100.00, 2, 1);
 
-INSERT INTO tb_order_item (qtd, subtotal, product_id, order_id) VALUES (2, 40.00, 1, 1);
-INSERT INTO tb_order_item (qtd, subtotal, product_id, order_id) VALUES (2, 20.00, 2, 1);
+INSERT INTO tb_product_image (url, type, product_id) VALUES ('https://media.istockphoto.com/id/468515806/pt/foto/pizza.jpg?s=2048x2048&w=is&k=20&c=glgCdae12P2FWboy9krgcZIT5M46PFGMNYyFAbpyHiM=', 'IMAGE', 1);
+INSERT INTO tb_product_image (url, type, product_id) VALUES ('https://media.istockphoto.com/id/1349383878/pt/foto/hawaiian-pizza-with-ham-and-pineapple.jpg?s=2048x2048&w=is&k=20&c=6rfKb8hlJ-P96F9ojG2EzMdy_b16fES6PHrdAU_cMCE=', 'IMAGE', 1);
+INSERT INTO tb_product_image (url, type, product_id) VALUES ('https://media.istockphoto.com/id/468515806/pt/foto/pizza.jpg?s=2048x2048&w=is&k=20&c=glgCdae12P2FWboy9krgcZIT5M46PFGMNYyFAbpyHiM=', 'IMAGE', 2);
+INSERT INTO tb_product_image (url, type, product_id) VALUES ('https://media.istockphoto.com/id/1349383878/pt/foto/hawaiian-pizza-with-ham-and-pineapple.jpg?s=2048x2048&w=is&k=20&c=6rfKb8hlJ-P96F9ojG2EzMdy_b16fES6PHrdAU_cMCE=', 'IMAGE', 2);
+INSERT INTO tb_product_image (url, type, product_id) VALUES ('https://media.istockphoto.com/id/468515806/pt/foto/pizza.jpg?s=2048x2048&w=is&k=20&c=glgCdae12P2FWboy9krgcZIT5M46PFGMNYyFAbpyHiM=', 'IMAGE', 3);
+INSERT INTO tb_product_image (url, type, product_id) VALUES ('https://media.istockphoto.com/id/1349383878/pt/foto/hawaiian-pizza-with-ham-and-pineapple.jpg?s=2048x2048&w=is&k=20&c=6rfKb8hlJ-P96F9ojG2EzMdy_b16fES6PHrdAU_cMCE=', 'IMAGE', 3);
+INSERT INTO tb_product_image (url, type, product_id) VALUES ('https://media.istockphoto.com/id/468515806/pt/foto/pizza.jpg?s=2048x2048&w=is&k=20&c=glgCdae12P2FWboy9krgcZIT5M46PFGMNYyFAbpyHiM=', 'IMAGE', 4);
+INSERT INTO tb_product_image (url, type, product_id) VALUES ('https://media.istockphoto.com/id/1349383878/pt/foto/hawaiian-pizza-with-ham-and-pineapple.jpg?s=2048x2048&w=is&k=20&c=6rfKb8hlJ-P96F9ojG2EzMdy_b16fES6PHrdAU_cMCE=', 'IMAGE', 4);
+INSERT INTO tb_product_image (url, type, product_id) VALUES ('https://media.istockphoto.com/id/468515806/pt/foto/pizza.jpg?s=2048x2048&w=is&k=20&c=glgCdae12P2FWboy9krgcZIT5M46PFGMNYyFAbpyHiM=', 'IMAGE', 5);
+INSERT INTO tb_product_image (url, type, product_id) VALUES ('https://media.istockphoto.com/id/1349383878/pt/foto/hawaiian-pizza-with-ham-and-pineapple.jpg?s=2048x2048&w=is&k=20&c=6rfKb8hlJ-P96F9ojG2EzMdy_b16fES6PHrdAU_cMCE=', 'IMAGE', 5);
+INSERT INTO tb_product_image (url, type, product_id) VALUES ('https://media.istockphoto.com/id/468515806/pt/foto/pizza.jpg?s=2048x2048&w=is&k=20&c=glgCdae12P2FWboy9krgcZIT5M46PFGMNYyFAbpyHiM=', 'IMAGE', 6);
+INSERT INTO tb_product_image (url, type, product_id) VALUES ('https://media.istockphoto.com/id/1349383878/pt/foto/hawaiian-pizza-with-ham-and-pineapple.jpg?s=2048x2048&w=is&k=20&c=6rfKb8hlJ-P96F9ojG2EzMdy_b16fES6PHrdAU_cMCE=', 'IMAGE', 6);
 
+
+
+INSERT INTO tb_order (instant, status, total, user_id, pizzeria_id) VALUES ('2023-08-16T21:12:27.198940800Z', 'CANCELADO', 50.00, 1, 1);
+INSERT INTO tb_order (instant, status, total, user_id, pizzeria_id) VALUES ('2023-08-16T21:12:27.198940800Z', 'CANCELADO', 100.00, 2, 1);
+
+INSERT INTO tb_order_item (quantity, subtotal, observation, product_id, order_id) VALUES (2, 40.00, 'Adicionar Cebola!', 1, 1);
+INSERT INTO tb_order_item (quantity, subtotal, observation, product_id, order_id) VALUES (2, 20.00, 'Adcionar azeite!', 2, 1);
+INSERT INTO tb_order_item (quantity, subtotal, observation, product_id, order_id) VALUES (1, 20.00, 'Adicionar molho!', 1, 2);

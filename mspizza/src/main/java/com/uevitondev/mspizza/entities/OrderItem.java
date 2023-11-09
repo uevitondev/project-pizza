@@ -11,8 +11,10 @@ public class OrderItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer qtd;
+    private Integer quantity;
     private Double subtotal;
+    private String observation;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
@@ -23,9 +25,9 @@ public class OrderItem implements Serializable {
     public OrderItem() {
     }
 
-    public OrderItem(Long id, Integer qtd, Double subtotal) {
+    public OrderItem(Long id, Integer quantity, Double subtotal) {
         this.id = id;
-        this.qtd = qtd;
+        this.quantity = quantity;
         this.subtotal = subtotal;
     }
 
@@ -37,12 +39,13 @@ public class OrderItem implements Serializable {
         this.id = id;
     }
 
-    public Integer getQtd() {
-        return qtd;
+
+    public Integer getQuantity() {
+        return quantity;
     }
 
-    public void setQtd(Integer qtd) {
-        this.qtd = qtd;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public Double getSubtotal() {
@@ -50,7 +53,15 @@ public class OrderItem implements Serializable {
     }
 
     public void setSubtotal() {
-        this.subtotal = this.product.getPrice() * this.qtd;
+        this.subtotal = this.product.getPrice() * this.quantity;
+    }
+
+    public String getObservation() {
+        return observation;
+    }
+
+    public void setObservation(String observation) {
+        this.observation = observation;
     }
 
     public Product getProduct() {

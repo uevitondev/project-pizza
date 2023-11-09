@@ -8,17 +8,18 @@ import java.io.Serializable;
 public class CartItemDTO implements Serializable {
     @NotNull(message = "productId: is mandatory")
     private Long productId;
-    @NotNull(message = "qtd: is mandatory")
+    @NotNull(message = "quantity: is mandatory")
     @Min(value = 1, message = "qtd: minimum value = 1")
-    private Integer qtd;
+    private Integer quantity;
+    private String observation;
 
     public CartItemDTO() {
-
     }
 
-    public CartItemDTO(Long productId, Integer qtd) {
+    public CartItemDTO(Long productId, Integer quantity, String observation) {
         this.productId = productId;
-        this.qtd = qtd;
+        this.quantity = quantity;
+        this.observation = observation;
     }
 
     public Long getProductId() {
@@ -29,11 +30,19 @@ public class CartItemDTO implements Serializable {
         this.productId = productId;
     }
 
-    public Integer getQtd() {
-        return qtd;
+    public Integer getQuantity() {
+        return quantity;
     }
 
-    public void setQtd(Integer qtd) {
-        this.qtd = qtd;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getObservation() {
+        return observation;
+    }
+
+    public void setObservation(String observation) {
+        this.observation = observation;
     }
 }

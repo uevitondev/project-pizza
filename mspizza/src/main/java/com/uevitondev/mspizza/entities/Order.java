@@ -15,7 +15,6 @@ public class Order implements Serializable {
     private Long id;
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private Instant instant;
-    private String description;
     private String status;
     private Double total;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -30,10 +29,9 @@ public class Order implements Serializable {
     public Order() {
     }
 
-    public Order(Long id, Instant instant, String description, String status, Double total) {
+    public Order(Long id, Instant instant, String status, Double total) {
         this.id = id;
         this.instant = instant;
-        this.description = description;
         this.status = status;
         this.total = total;
     }
@@ -52,14 +50,6 @@ public class Order implements Serializable {
 
     public void setInstant(Instant instant) {
         this.instant = instant;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getStatus() {

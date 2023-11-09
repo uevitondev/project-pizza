@@ -3,7 +3,9 @@ package com.uevitondev.mspizza.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_product")
@@ -21,6 +23,9 @@ public class Product implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pizzeria_id")
     private Pizzeria pizzeria;
+
+    @OneToMany(mappedBy = "product")
+    private final Set<ProductImage> images = new HashSet<>();
 
     public Product() {
     }
@@ -78,6 +83,10 @@ public class Product implements Serializable {
 
     public void setPizzeria(Pizzeria pizzeria) {
         this.pizzeria = pizzeria;
+    }
+
+    public Set<ProductImage> getImages() {
+        return images;
     }
 
     @Override

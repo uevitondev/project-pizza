@@ -54,7 +54,6 @@ public class OrderService {
         User user = userRepository.getReferenceById(dto.getUserId());
         Pizzeria pizzeria = pizzeriaRepository.getReferenceById(dto.getPizzeriaId());
         order.setInstant(Instant.now());
-        order.setDescription(dto.getDescription());
         order.setStatus(OrderStatus.PENDENTE.toString());
         order.setUser(user);
         order.setPizzeria(pizzeria);
@@ -71,8 +70,9 @@ public class OrderService {
                 Product product = productRepository.getReferenceById(cartItem.getProductId());
                 OrderItem orderItem = new OrderItem();
                 orderItem.setProduct(product);
-                orderItem.setQtd(cartItem.getQtd());
+                orderItem.setQuantity(cartItem.getQuantity());
                 orderItem.setSubtotal();
+                orderItem.setObservation(cartItem.getObservation());
                 orderItem.setOrder(order);
                 order.getOrderItems().add(orderItem);
                 orderItemRepository.save(orderItem);
