@@ -13,16 +13,21 @@ public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private Instant instant;
+
     private String status;
     private Double total;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pizzeria_id")
     private Pizzeria pizzeria;
+
     @OneToMany(mappedBy = "order")
     private final Set<OrderItem> orderItems = new HashSet<>();
 

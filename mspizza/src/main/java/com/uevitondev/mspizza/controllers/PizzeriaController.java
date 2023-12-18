@@ -1,9 +1,7 @@
 package com.uevitondev.mspizza.controllers;
 
 import com.uevitondev.mspizza.dtos.PizzeriaDTO;
-import com.uevitondev.mspizza.dtos.ProductDTO;
 import com.uevitondev.mspizza.services.PizzeriaService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -14,8 +12,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/pizzerias")
 public class PizzeriaController {
-    @Autowired
-    private PizzeriaService pizzeriaService;
+
+    private final PizzeriaService pizzeriaService;
+
+    public PizzeriaController(PizzeriaService pizzeriaService) {
+        this.pizzeriaService = pizzeriaService;
+    }
 
     @GetMapping
     public ResponseEntity<List<PizzeriaDTO>> getAllPizzerias() {
@@ -37,7 +39,6 @@ public class PizzeriaController {
     @PutMapping("/{id}")
     public ResponseEntity<PizzeriaDTO> updatePizzeriaById(@PathVariable Long id, @RequestBody PizzeriaDTO dto) {
         dto = pizzeriaService.updatePizzeriaById(id, dto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.ok().body(dto);
     }
 
@@ -47,8 +48,4 @@ public class PizzeriaController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{id}/products")
-    public ResponseEntity<List<ProductDTO>> getAllProductsByPizzeriaId(@PathVariable Long id) {
-        return ResponseEntity.ok().body(pizzeriaService.getAllProductsByPizzeriaId(id));
-    }
 }

@@ -15,7 +15,6 @@ public class CategoryDTO implements Serializable {
     private final Set<ProductDTO> products = new HashSet<>();
 
     public CategoryDTO() {
-
     }
 
     public CategoryDTO(Long id, String name) {

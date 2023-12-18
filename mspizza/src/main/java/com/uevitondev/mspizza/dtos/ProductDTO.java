@@ -1,7 +1,6 @@
 package com.uevitondev.mspizza.dtos;
 
 import com.uevitondev.mspizza.entities.Product;
-import com.uevitondev.mspizza.entities.ProductImage;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -22,7 +21,6 @@ public class ProductDTO implements Serializable {
     @NotNull(message = "pizzeriaId: is mandatory")
     private Long pizzeriaId;
     private final Set<ProductImageDTO> images = new HashSet<>();
-
 
     public ProductDTO() {
     }

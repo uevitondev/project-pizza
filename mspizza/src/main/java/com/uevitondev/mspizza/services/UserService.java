@@ -3,6 +3,7 @@ package com.uevitondev.mspizza.services;
 import com.uevitondev.mspizza.dtos.UserDTO;
 import com.uevitondev.mspizza.entities.Role;
 import com.uevitondev.mspizza.entities.User;
+import com.uevitondev.mspizza.exceptions.AuthorizationException;
 import com.uevitondev.mspizza.exceptions.DatabaseException;
 import com.uevitondev.mspizza.exceptions.ResourceNotFoundException;
 import com.uevitondev.mspizza.repositories.RoleRepository;
@@ -10,7 +11,10 @@ import com.uevitondev.mspizza.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,13 +22,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
+
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private RoleRepository roleRepository;
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+    }
 
     @Transactional(readOnly = true)
     public List<UserDTO> findAllUsers() {
@@ -41,21 +48,22 @@ public class UserService {
 
     @Transactional
     public UserDTO insertNewUser(UserDTO dto) {
+        try {
+            User user = new User();
+            user.setFirstName(dto.getFirstName());
+            user.setLastName(dto.getLastName());
+            user.setEmail(dto.getEmail());
+            user.setPassword(dto.getPassword());
 
-        User user = new User();
-        user.setFirstName(dto.getFirstName());
-        user.setLastName(dto.getLastName());
-        user.setEmail(dto.getEmail());
-        user.setPassword(passwordEncoder.encode(dto.getPassword()));
-
-        for (Long roleId : dto.getRolesId()) {
-            Role role = roleRepository.findById(roleId)
-                    .orElseThrow(() -> new ResourceNotFoundException("role not found, for id: " + roleId));
-            user.getRoles().add(role);
+            for (Long roleId : dto.getRolesId()) {
+                Role role = roleRepository.getReferenceById(roleId);
+                user.getRoles().add(role);
+            }
+            user = userRepository.save(user);
+            return new UserDTO(user);
+        } catch (Exception e) {
+            throw new ResourceNotFoundException(e.toString());
         }
-        user = userRepository.save(user);
-
-        return new UserDTO(user);
     }
 
     @Transactional
@@ -65,7 +73,7 @@ public class UserService {
             user.setFirstName(dto.getFirstName());
             user.setLastName(dto.getLastName());
             user.setEmail(dto.getEmail());
-            user.setPassword(passwordEncoder.encode(dto.getPassword()));
+            user.setPassword(dto.getPassword());
             user.getRoles().clear();
 
             for (Long roleId : dto.getRolesId()) {
@@ -92,4 +100,21 @@ public class UserService {
             throw new DatabaseException("Referential integrity constraint violation");
         }
     }
+
+    @Transactional
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Bad Credentials!"));
+    }
+
+    public static User userAuthenticated() {
+        try {
+            return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } catch (Exception e) {
+            throw new AuthorizationException("Acesso negado!");
+        }
+    }
+
+
 }

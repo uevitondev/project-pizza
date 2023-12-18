@@ -18,7 +18,6 @@ public class Pizzeria implements Serializable {
     private final Set<Product> products = new HashSet<>();
 
     public Pizzeria() {
-
     }
 
     public Pizzeria(Long id, String name) {

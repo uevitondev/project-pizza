@@ -10,27 +10,44 @@ import com.uevitondev.mspizza.repositories.CategoryRepository;
 import com.uevitondev.mspizza.repositories.PizzeriaRepository;
 import com.uevitondev.mspizza.repositories.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 public class ProductService {
-    @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    private CategoryRepository categoryRepository;
-    @Autowired
-    private PizzeriaRepository pizzeriaRepository;
+
+    private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
+    private final PizzeriaRepository pizzeriaRepository;
+
+    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository, PizzeriaRepository pizzeriaRepository) {
+        this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
+        this.pizzeriaRepository = pizzeriaRepository;
+    }
 
     @Transactional(readOnly = true)
-    public List<ProductDTO> findAllProducts() {
-        return productRepository.findAll().stream().map(ProductDTO::new).toList();
+    public Page<ProductDTO> findAllProducts(Pageable pageable) {
+        Page<ProductDTO> map = productRepository.findAllProductsPaged(pageable).map(product -> new ProductDTO(product));
+        return map;
     }
+
+
+    @Transactional(readOnly = true)
+    public Page<ProductDTO> getAllProductsByPizzeriaId(Long id, Pageable pageable) {
+        Page<ProductDTO> map = productRepository.findAllProductsPagedByPizzeriaId(id, pageable).map(product -> new ProductDTO(product));
+        return map;
+    }
+
+
+    /*@Transactional(readOnly = true)
+    public List<ProductDTO> getAllProductsByPizzeriaId(Long id) {
+        return productRepository.findProductsByPizzeriaId(id).stream().map(ProductDTO::new).toList();
+    }*/
 
     @Transactional(readOnly = true)
     public ProductDTO findProductById(Long id) {

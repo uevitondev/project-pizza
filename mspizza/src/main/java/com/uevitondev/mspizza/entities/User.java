@@ -17,13 +17,26 @@ public class User implements Serializable, UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String firstName;
+
+    @Column(nullable = false)
     private String lastName;
+
+    @Column(nullable = false, unique = true, length = 45)
     private String email;
+
+    @Column(nullable = false, length = 64)
     private String password;
+
+    @Column(nullable = false)
+    private boolean isEnabled;
+
     @ManyToMany
     @JoinTable(name = "tb_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private final Set<Role> roles = new HashSet<>();
+
     @OneToMany(mappedBy = "user")
     private final Set<Order> orders = new HashSet<>();
 
@@ -74,6 +87,11 @@ public class User implements Serializable, UserDetails {
         this.password = password;
     }
 
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+    }
+
+
     public Set<Role> getRoles() {
         return roles;
     }
@@ -113,7 +131,7 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.isEnabled;
     }
 
     @Override

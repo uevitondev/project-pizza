@@ -6,7 +6,6 @@ public class ResponseLoginDTO implements Serializable {
     private String token;
 
     public ResponseLoginDTO() {
-
     }
 
     public ResponseLoginDTO(String token) {

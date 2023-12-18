@@ -7,7 +7,7 @@ public class ProductImageDTO {
     private String url;
     private String type;
 
-    public ProductImageDTO(){
+    public ProductImageDTO() {
     }
 
     public ProductImageDTO(Long id, String url, String type) {
@@ -16,7 +16,7 @@ public class ProductImageDTO {
         this.type = type;
     }
 
-    public ProductImageDTO(ProductImage productImage){
+    public ProductImageDTO(ProductImage productImage) {
         this.id = productImage.getId();
         this.url = productImage.getUrl();
         this.type = productImage.getType();

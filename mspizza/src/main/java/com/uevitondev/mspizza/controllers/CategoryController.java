@@ -2,7 +2,6 @@ package com.uevitondev.mspizza.controllers;
 
 import com.uevitondev.mspizza.dtos.CategoryDTO;
 import com.uevitondev.mspizza.services.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -13,8 +12,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/categories")
 public class CategoryController {
-    @Autowired
-    private CategoryService categoryService;
+
+    private final CategoryService categoryService;
+
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     @GetMapping
     public ResponseEntity<List<CategoryDTO>> getAllCategories() {
@@ -36,7 +39,6 @@ public class CategoryController {
     @PutMapping("/{id}")
     public ResponseEntity<CategoryDTO> updateCategoryById(@PathVariable Long id, @RequestBody CategoryDTO dto) {
         dto = categoryService.updateCategoryById(id, dto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.ok().body(dto);
     }
 

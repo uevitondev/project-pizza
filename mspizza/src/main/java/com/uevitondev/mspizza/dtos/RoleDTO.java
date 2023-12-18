@@ -11,7 +11,6 @@ public class RoleDTO implements Serializable {
     private String authority;
 
     public RoleDTO() {
-
     }
 
     public RoleDTO(Long id, String authority) {

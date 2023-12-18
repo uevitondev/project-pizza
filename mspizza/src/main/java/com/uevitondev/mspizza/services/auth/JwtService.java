@@ -12,8 +12,10 @@ import java.util.Date;
 public class JwtService {
     @Value("${my.secret.client}")
     private String mySecretClient;
+
     @Value("${my.secret.key}")
     private String mySecretKey;
+
 
     public String generateToken(User user) {
         return JWT
@@ -24,7 +26,7 @@ public class JwtService {
                 .sign(Algorithm.HMAC256(mySecretKey));
     }
 
-    public String validateToken(String token) {
+    public String extractSubject(String token) {
         return JWT
                 .require(Algorithm.HMAC256(mySecretKey))
                 .withIssuer(mySecretClient)
@@ -32,4 +34,6 @@ public class JwtService {
                 .verify(token)
                 .getSubject();
     }
+
+
 }

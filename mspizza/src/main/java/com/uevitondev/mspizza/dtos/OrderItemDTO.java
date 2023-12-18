@@ -12,7 +12,6 @@ public class OrderItemDTO implements Serializable {
     private ProductDTO product;
 
     public OrderItemDTO() {
-
     }
 
     public OrderItemDTO(Long id, Integer quantity, Double subtotal, String observation, ProductDTO product) {

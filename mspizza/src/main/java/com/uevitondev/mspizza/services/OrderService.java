@@ -8,7 +8,6 @@ import com.uevitondev.mspizza.enums.OrderStatus;
 import com.uevitondev.mspizza.exceptions.ResourceNotFoundException;
 import com.uevitondev.mspizza.repositories.*;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,21 +17,34 @@ import java.util.Set;
 
 @Service
 public class OrderService {
-    @Autowired
-    private OrderRepository orderRepository;
-    @Autowired
-    private OrderItemRepository orderItemRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private PizzeriaRepository pizzeriaRepository;
-    @Autowired
-    private ProductRepository productRepository;
+
+    private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
+    private final UserRepository userRepository;
+    private final PizzeriaRepository pizzeriaRepository;
+    private final ProductRepository productRepository;
+
+    public OrderService(OrderRepository orderRepository, OrderItemRepository orderItemRepository,
+                        UserRepository userRepository, PizzeriaRepository pizzeriaRepository,
+                        ProductRepository productRepository) {
+        this.orderRepository = orderRepository;
+        this.orderItemRepository = orderItemRepository;
+        this.userRepository = userRepository;
+        this.pizzeriaRepository = pizzeriaRepository;
+        this.productRepository = productRepository;
+    }
 
     @Transactional(readOnly = true)
     public List<OrderDTO> findAllOrders() {
         return orderRepository.findAll().stream().map(OrderDTO::new).toList();
     }
+
+    @Transactional(readOnly = true)
+    public List<OrderDTO> findAllOrdersByUser() {
+        User user = UserService.userAuthenticated();
+        return orderRepository.findByUser(user).stream().map(OrderDTO::new).toList();
+    }
+
 
     @Transactional(readOnly = true)
     public OrderDTO findOrderById(Long id) {
@@ -42,20 +54,18 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderDTO insertNewOrder(ShoppingCartDTO dto) {
+    public OrderDTO saveNewOrder(ShoppingCartDTO dto) {
+        User user = UserService.userAuthenticated();
 
-        if (!userRepository.existsById(dto.getUserId())) {
-            throw new ResourceNotFoundException("user not found, id: " + dto.getUserId());
-        }
         if (!userRepository.existsById(dto.getPizzeriaId())) {
-            throw new ResourceNotFoundException("pizzeria not found, id: " + dto.getUserId());
+            throw new ResourceNotFoundException("pizzeria not found, id: " + dto.getPizzeriaId());
         }
-        Order order = new Order();
-        User user = userRepository.getReferenceById(dto.getUserId());
         Pizzeria pizzeria = pizzeriaRepository.getReferenceById(dto.getPizzeriaId());
+
+        Order order = new Order();
+        order.setUser(user);
         order.setInstant(Instant.now());
         order.setStatus(OrderStatus.PENDENTE.toString());
-        order.setUser(user);
         order.setPizzeria(pizzeria);
         saveOrderItemByOrder(order, dto.getCartItems());
         order.setTotal();

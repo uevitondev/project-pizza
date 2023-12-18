@@ -4,7 +4,6 @@ import com.uevitondev.mspizza.dtos.OrderDTO;
 import com.uevitondev.mspizza.dtos.ShoppingCartDTO;
 import com.uevitondev.mspizza.services.OrderService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,13 +12,21 @@ import java.util.List;
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
-    @Autowired
-    private OrderService orderService;
 
+    private final OrderService orderService;
+
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @GetMapping
     public ResponseEntity<List<OrderDTO>> findAllOrders() {
         return ResponseEntity.ok().body(orderService.findAllOrders());
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<List<OrderDTO>> findAllOrdersByUser() {
+        return ResponseEntity.ok().body(orderService.findAllOrdersByUser());
     }
 
     @GetMapping("/{id}")
@@ -28,7 +35,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<OrderDTO> insertNewOrder(@RequestBody @Valid ShoppingCartDTO dto) {
-        return ResponseEntity.ok().body(orderService.insertNewOrder(dto));
+    public ResponseEntity<OrderDTO> saveNewOrder(@RequestBody @Valid ShoppingCartDTO dto) {
+        return ResponseEntity.ok().body(orderService.saveNewOrder(dto));
     }
 }
